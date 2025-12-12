@@ -16,3 +16,9 @@ outputs/
 # Ignorar archivos temporales
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+#Entornos virtuales 
+.venv/
+venv/
