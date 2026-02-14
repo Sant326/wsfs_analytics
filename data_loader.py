@@ -10,13 +10,18 @@ BASE_DIR = Path(__file__).resolve().parent  # directorio raiz dentro de wsfs_ana
 ENV_PATH = BASE_DIR / "docker" / ".env"
 load_dotenv(ENV_PATH)
 
+# O Opción Avanzada (selecciona según ambiente)
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'production')
 
 def get_db_connection():
-    """Conexión segura a PostgreSQL"""
-    connection_string = (
-        f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}"
-        f"@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB')}"
-    )
+    if ENVIRONMENT == 'production':
+        connection_string = os.getenv('DATABASE_URL')
+    else:
+        """Conexión segura a PostgreSQL"""
+        connection_string = (
+            f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}"
+            f"@{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DB')}"
+        )
     return create_engine(connection_string)
 
 
