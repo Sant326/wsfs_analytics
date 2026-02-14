@@ -23,10 +23,6 @@ __pycache__/
 .venv/
 venv/
 
-# Docker
-docker/.env
-docker/postgres_data/
-
-# Python
-__pycache__/
 *.pyc
+.env
+.DS_Store

@@ -15,7 +15,7 @@ df_limpio.columns = ['id_flota_raw', 'tipo_vehiculo', 'capacidad_carga', 'consum
 
 # 4. Limpiar datos
 df_limpio['id_flota_raw'] = df_limpio['id_flota_raw'].str.strip()  # Quitar espacios
-df_limpio['tipo_vehiculo'] = df_limpio['tipo_vehiculo'].str.strip().str.title()  # Normalizar
+df_limpio['tipo_vehiculo'] = df_limpio['tipo_vehiculo'].str.strip().str.title()  # Normalizar primera letra Mayuscula resto Minusculas
 df_limpio['capacidad_carga'] = pd.to_numeric(df_limpio['capacidad_carga'], errors='coerce')
 df_limpio['consumo_promedio'] = pd.to_numeric(df_limpio['consumo_promedio'], errors='coerce')
 

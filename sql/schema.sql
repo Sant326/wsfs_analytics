@@ -2,7 +2,7 @@
 -- 1. PRIORIDAD 1: Tablas sin dependencias (customer, parts)
 CREATE TABLE customer (
     customer_id SERIAL PRIMARY KEY,
-    customer_number VARCHAR(40) UNIQUE,
+    customer_number VARCHAR(40),
     customer_name VARCHAR(50) NOT NULL,
     creation_date DATE,
     department_city VARCHAR(50),
@@ -14,7 +14,7 @@ CREATE TABLE customer (
 
 CREATE TABLE parts (
     part_id SERIAL PRIMARY KEY,
-    part_number VARCHAR(50) UNIQUE,
+    part_number VARCHAR(50),
     description VARCHAR(70) NOT NULL,
     category VARCHAR(50),
     unit_cost NUMERIC(10,2),
@@ -26,7 +26,7 @@ CREATE TABLE parts (
 -- 2. PRIORIDAD 2: Tablas que dependen solo de customer/parts
 CREATE TABLE equipment (
     equipment_id SERIAL PRIMARY KEY,
-    serial_number VARCHAR(50) UNIQUE,
+    serial_number VARCHAR(50),
     model VARCHAR(50),
     year INTEGER,
     customer_id INTEGER NOT NULL,
@@ -154,3 +154,11 @@ ALTER TABLE parts_sales ADD CONSTRAINT fk_partsales_service
 -- Índices para rendimiento
 CREATE INDEX idx_customer_sales ON sales(customer_id);
 CREATE INDEX idx_equipment_customer ON equipment(customer_id);
+
+-- eliminar columna department_city separar en department 
+--y city
+ALTER TABLE customer DROP COLUMN department_city ;
+
+ALTER TABLE customer 
+ADD COLUMN department VARCHAR(50),
+ADD COLUMN city VARCHAR(50)

@@ -22,11 +22,14 @@ df_customer_limpio = df_customer_limpio.dropna(subset=['phone', 'email'], how='a
 print("df_customer_limpio informacion")
 print(df_customer_limpio.info())
 print(df_customer_limpio)
-
-df_customer_limpio['email'] = df_customer_limpio['email'].fillna('no_email@ejemplo.com') 
-print("df_sin_email_nulo")
+# volver a nullo porque debe ser unico el mail
+#df_customer_limpio['email'] = df_customer_limpio['email'].fillna('no_email@ejemplo.com')
+df_customer_limpio['email'] = df_customer_limpio['email'].replace('no_email@ejemplo.com', pd.NA) 
+print("df_con_email_nulo")
 print(df_customer_limpio.info())
 print(df_customer_limpio)
+
+
 
 
 df_customer_limpio['phone'] = df_customer_limpio['phone'].fillna('+8888888888') 
@@ -84,9 +87,16 @@ print("df_final:")
 print(df_final)
 print(df_final.info())
 
+df_final = df_final.drop_duplicates(subset=['email'], keep='last')
+
+
+print("df_final sin duplicados de email:")
+print(df_final)
+print(df_final.info())
 #df_customer_limpio = df_customer_limpio.drop_duplicates()
-"""
-engine = create_engine('postgresql://postgres:tu_password_seguro_123@localhost:5400/Maquinaria_AgroForestal')
+
+##engine = create_engine('postgresql://myuser:mypassword@localhost:5433/maquinaria_agroforestal') -- funciona para el postgres de docker
+engine = create_engine('postgresql://neondb_owner:npg_jhYlUONWJ6B7@ep-gentle-forest-aist7uh4-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require')
 # columnas en csv customer_id, customer_number, customer_name, creation_date, department, city, address, phone, email, status
 
 # 9. CARGAR ✅ Todas las columnas de tu tabla
@@ -112,7 +122,8 @@ df_final.to_sql(
 print("✅ Datos cargados COMPLETOS en tabla customer!")
 
 
-"""
+
+
 
 
 

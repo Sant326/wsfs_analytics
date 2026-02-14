@@ -1,6 +1,8 @@
-pandas
-numpy
-sqlalchemy
-psycopg2-binary
-jupyter
-python-dotenv
+dash==3.3.0
+dash-bootstrap-components==2.0.4
+plotly==6.5.0
+gunicorn==23.0.0
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
+pandas==2.1.4           # Si manipulas datos
+sqlalchemy==2.0.25      # Si usas ORM en lugar de psycopg2 directo

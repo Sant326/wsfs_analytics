@@ -77,12 +77,26 @@ print("df_final a sql-ultimo: ")
 print(df_final)
 print(df_final.info())
 
-
-engine = create_engine('postgresql://postgres:tu_password_seguro_123@localhost:5400/Maquinaria_AgroForestal')
+engine = create_engine('postgresql://neondb_owner:npg_jhYlUONWJ6B7@ep-gentle-forest-aist7uh4-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require')
+##engine = create_engine('postgresql://myuser:mypassword@localhost:5433/maquinaria_agroforestal')
 # columnas en csv customer_id, customer_number, customer_name, creation_date, department, city, address, phone, email, status
 # columnas: equipment_id,serial_number,model,year,customer_id,current_status, hours_worked, location_department, location_city
 
 
+# leemos nuestra base de datos
+df_customer_db_eq = pd.read_sql("select customer_id from customer", engine)
+#obtenemos customer_id
+ids_validos = df_customer_db_eq['customer_id'].unique()
+
+print("df from customer database:")
+print(ids_validos)
+
+
+df_final = df_final[df_final['customer_id'].isin(ids_validos)].copy()
+
+print("df_final a sql-ultimo: ")
+print(df_final)
+print(df_final.info())
 
 # 9. CARGAR ✅ Todas las columnas de tu tabla
 df_final.to_sql(
@@ -90,7 +104,7 @@ df_final.to_sql(
     con=engine,
     if_exists='append',
     index=False,
-    method='multi',
+    method=None,
     dtype={
         'serial_number': VARCHAR(50),
         'model': VARCHAR(50),
